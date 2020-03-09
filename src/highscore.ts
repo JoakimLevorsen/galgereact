@@ -30,9 +30,7 @@ export const saveHighScore = (highScore: HighScore) => {
         let highScoreArray = loadHighScores();
         highScoreArray.push(highScore);
         if (highScoreArray.length > 1) {
-            highScoreArray.sort(function(a, b) {
-                return b.score - a.score;
-            });
+            highScoreArray.sort((a, b) => b.score - a.score);
         }
         localStorage.setItem(key, JSON.stringify(highScoreArray));
     } else {
