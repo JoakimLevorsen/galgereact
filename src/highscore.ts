@@ -1,7 +1,17 @@
+interface RawHighScore {
+    name: string;
+    time: string;
+    word: string;
+    wrongLettersGuessed: number;
+    timeInMs: number;
+    score: number;
+}
+
+const twoMinInMs = 120000;
+
 export default class HighScore {
     public timeInMs: number;
     public score: number;
-    readonly twoMinInMs = 120000;
 
     constructor(
         public name: string,
@@ -15,7 +25,7 @@ export default class HighScore {
 
     private calcScore(): number {
         return (
-            this.twoMinInMs -
+            twoMinInMs -
             this.timeInMs +
             500 * this.word.length -
             500 * this.wrongLettersGuessed
@@ -42,7 +52,12 @@ export const saveHighScore = (highScore: HighScore) => {
 
 export const loadHighScores = (): HighScore[] => {
     if (localStorage) {
-        return JSON.parse(localStorage.getItem(key) ?? "[]") as HighScore[];
+        return (JSON.parse(
+            localStorage.getItem(key) ?? "[]"
+        ) as RawHighScore[]).map(
+            ({ name, time, word, wrongLettersGuessed }) =>
+                new HighScore(name, new Date(time), word, wrongLettersGuessed)
+        );
     } else {
         alert("Sorry, your browser does not support web storage.");
         return [];

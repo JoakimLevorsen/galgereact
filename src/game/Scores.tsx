@@ -1,8 +1,8 @@
 import React from "react";
-import { Button } from "@material-ui/core";
+import HighScoreList from "../components/HighScoreList";
 
 export default () => (
-    <div>
-        <Button>Tilbage</Button>
+    <div style={{ flex: 1, height: "100%" }}>
+        <HighScoreList />
     </div>
 );
