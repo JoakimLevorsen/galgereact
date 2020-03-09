@@ -20,7 +20,7 @@ interface Props {
 export type GamePage = "Menu" | "Game" | "GameOver" | "Scores";
 
 export default ({ signOut }: Props) => {
-    const [gameState, setGameState] = useState<GamePage>("Menu");
+    const [gameState, setGameState] = useState<GamePage>("Game");
     const [finishedGame, setFinishedGame] = useState<HighScore | null>(null);
 
     const getContentForState = () => {
@@ -43,12 +43,13 @@ export default ({ signOut }: Props) => {
         }
     };
     return (
-        <div>
+        <>
             <AppBar>
                 <Toolbar>
                     <IconButton
                         disabled={gameState === "Menu"}
                         onClick={() => setGameState("Menu")}
+                        color="inherit"
                     >
                         <ArrowBackIcon
                             className={
@@ -56,7 +57,6 @@ export default ({ signOut }: Props) => {
                                     ? "BackButton disabledAnim"
                                     : "BackButton"
                             }
-                            color="secondary"
                         />
                     </IconButton>
                     <Typography style={{ flex: 1 }} variant="h6">
@@ -67,7 +67,7 @@ export default ({ signOut }: Props) => {
                     </Button>
                 </Toolbar>
             </AppBar>
-            <div>{getContentForState()}</div>
-        </div>
+            <div className="fullSize">{getContentForState()}</div>
+        </>
     );
 };

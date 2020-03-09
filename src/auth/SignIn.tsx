@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { TextField, Button, Paper } from "@material-ui/core";
+import { TextField, Button, Paper, Typography } from "@material-ui/core";
 import Axios from "axios";
+import Spacer from "../components/Spacer";
 
 interface Props {
     didSignIn: () => void;
@@ -22,16 +23,20 @@ export default (props: Props) => {
 
     return (
         <Paper
+            className="SignInPage"
             style={{
                 display: "flex",
                 flexDirection: "column",
-                height: 200,
+                height: 300,
                 width: 300,
                 background: "white",
                 padding: 20,
             }}
         >
-            <h2>Log ind</h2>
+            <Typography variant="h4" color="primary" align="center">
+                Log ind
+            </Typography>
+            <Spacer />
             <TextField
                 value={username}
                 label="Brugernavn"
@@ -40,9 +45,17 @@ export default (props: Props) => {
             <TextField
                 value={password}
                 label="Kodeord"
+                type="password"
                 onChange={e => setPassword(e.target.value)}
             />
-            <Button onClick={() => props.didSignIn()}>Log ind</Button>
+            <Spacer />
+            <Button
+                color="primary"
+                style={{ marginTop: 10 }}
+                onClick={() => props.didSignIn()}
+            >
+                Log ind
+            </Button>
         </Paper>
     );
 };
