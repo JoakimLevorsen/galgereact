@@ -26,13 +26,15 @@ export default class HighScore {
 const key = "highScore";
 
 export const saveHighScore = (highScore: HighScore) => {
-    if (typeof Storage) {
-        let highScoreArray = loadHighScores();
-        highScoreArray.push(highScore);
-        if (highScoreArray.length > 1) {
-            highScoreArray.sort((a, b) => b.score - a.score);
-        }
-        localStorage.setItem(key, JSON.stringify(highScoreArray));
+    if (localStorage) {
+        localStorage.setItem(
+            key,
+            JSON.stringify(
+                [...loadHighScores(), highScore].sort(
+                    (a, b) => b.score - a.score
+                )
+            )
+        );
     } else {
         alert("Sorry, your browser does not support web storage.");
     }
@@ -43,6 +45,6 @@ export const loadHighScores = (): HighScore[] => {
         return JSON.parse(localStorage.getItem(key) ?? "[]") as HighScore[];
     } else {
         alert("Sorry, your browser does not support web storage.");
-        return new Array<HighScore>(0);
+        return [];
     }
 };
