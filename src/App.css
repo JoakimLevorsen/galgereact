@@ -41,3 +41,19 @@ h2 {
 .wordContainer>div {
     font-size: 30px;
 }
+
+.newScore {
+    animation: bounce 1s ease-in-out infinite;
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: scale(1.02);
+    }
+
+    50% {
+        transform: scale(0.995);
+    }
+}

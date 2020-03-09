@@ -1,12 +1,30 @@
 import React, { useState, useEffect } from "react";
 import HighScore, { loadHighScores } from "../highscore";
 import { Card, Typography } from "@material-ui/core";
+import Spacer from "./Spacer";
 
-export default () => {
+interface Props {
+    selectedGame?: HighScore;
+}
+
+export default ({ selectedGame }: Props) => {
     const [list, setList] = useState<HighScore[]>([]);
 
     useEffect(() => {
-        setList(loadHighScores());
+        const list = loadHighScores();
+        setList(list);
+        if (selectedGame) {
+            const currentGame = list.findIndex(
+                h => h.uniqueness === selectedGame.uniqueness
+            );
+            if (currentGame !== -1) {
+                const target = document.querySelector(`#A${currentGame}`);
+                if (target) {
+                    target.scrollIntoView({ behavior: "smooth" });
+                }
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const formatTime = (input: Date) => {
@@ -23,27 +41,47 @@ export default () => {
     };
 
     return (
-        <div style={{ maxHeight: "100%", overflow: "scroll" }}>
-            {list.map(({ name, time, word, wrongLettersGuessed }) => {
+        <div
+            style={{ maxHeight: "100%", overflow: "scroll", minWidth: "80vw" }}
+        >
+            {list.map((score, index) => {
+                const {
+                    name,
+                    time,
+                    word,
+                    wrongLettersGuessed,
+                    calcScore,
+                    uniqueness,
+                } = score;
                 const { min, sec } = formatTime(time);
                 return (
                     <Card
+                        key={index}
+                        id={"A" + index}
+                        className={
+                            uniqueness === selectedGame?.uniqueness
+                                ? "newScore"
+                                : ""
+                        }
                         style={{
                             margin: 15,
                             display: "flex",
-                            justifyContent: "space-between",
                             alignItems: "center",
                             padding: 15,
                         }}
                     >
+                        <Typography variant="h2">{index + 1}.</Typography>
                         <Typography>{name}</Typography>
-                        <Typography>
-                            {min}:{sec}
-                        </Typography>
+                        <Spacer />
+                        <Typography>{word}</Typography>
+                        <Spacer />
                         <div style={{ textAlign: "right" }}>
-                            <Typography>{word}</Typography>
+                            <Typography>{calcScore()} point</Typography>
                             <Typography>
                                 {wrongLettersGuessed} forkerte
+                            </Typography>
+                            <Typography>
+                                {min}:{sec}
                             </Typography>
                         </div>
                     </Card>

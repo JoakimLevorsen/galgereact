@@ -20,7 +20,7 @@ interface Props {
 export type GamePage = "Menu" | "Game" | "GameOver" | "Scores";
 
 export default ({ signOut }: Props) => {
-    const [gameState, setGameState] = useState<GamePage>("Scores");
+    const [gameState, setGameState] = useState<GamePage>("Menu");
     const [finishedGame, setFinishedGame] = useState<HighScore | null>(null);
 
     const getContentForState = () => {
@@ -29,7 +29,12 @@ export default ({ signOut }: Props) => {
                 return <Menu setGameState={setGameState} />;
             case "Game":
                 return (
-                    <PlayArea gameFinished={score => setFinishedGame(score)} />
+                    <PlayArea
+                        gameFinished={score => {
+                            setFinishedGame(score);
+                            setGameState("GameOver");
+                        }}
+                    />
                 );
             case "GameOver":
                 return (
