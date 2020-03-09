@@ -4,3 +4,16 @@
     align-items: center;
     background: purple;
 }
+
+h2 {
+    text-align: center;
+}
+
+.BackButton {
+    transition: opacity 350ms !important;
+    opacity: 1;
+}
+
+.disabledAnim {
+    opacity: 0;
+}
