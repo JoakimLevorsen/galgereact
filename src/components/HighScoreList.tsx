@@ -46,8 +46,28 @@ export default ({ selectedGame }: Props) => {
 
     return (
         <div
-            style={{ maxHeight: "100%", overflow: "scroll", minWidth: "80vw" }}
+            style={{
+                maxHeight: "100%",
+                height: "100%",
+                overflow: "scroll",
+                minWidth: "80vw",
+            }}
         >
+            {list.length === 0 && (
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100%",
+                    }}
+                >
+                    <Typography variant="h2">
+                        Ingen scores endnu, du må hellere komme igang med at
+                        spille!
+                    </Typography>
+                </div>
+            )}
             {list.map((score, index) => {
                 const {
                     name,
