@@ -4,7 +4,8 @@ import Spacer from "../components/Spacer";
 import { CircularProgress } from "@material-ui/core";
 
 interface Props {
-    gameFinished: (result: HighScore) => void;
+    gameWon: (result: HighScore) => void;
+    gameLost: (word: string) => void;
 }
 
 interface State {
@@ -73,11 +74,13 @@ export default class PlayArea extends Component<Props> {
                                 wrongGuessed.size
                             );
                             saveHighScore(newScore);
-                            this.props.gameFinished(newScore);
+                            this.props.gameWon(newScore);
                         }
                     } else {
                         wrongGuessed.add(key);
-                        this.setState({ wrongGuessed });
+                        if (wrongGuessed.size >= 7) {
+                            this.props.gameLost(secretWord);
+                        } else this.setState({ wrongGuessed });
                     }
                 }
             }
@@ -117,7 +120,7 @@ export default class PlayArea extends Component<Props> {
                 flex: 1,
                 flexDirection: "row",
                 display: "flex",
-                height: "100%",
+                width: "100%",
             }}
             className="playArea"
         >

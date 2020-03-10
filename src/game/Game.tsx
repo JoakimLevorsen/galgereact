@@ -11,17 +11,19 @@ import Scores from "./Scores";
 import GameOver from "./GameOver";
 import PlayArea from "./PlayArea";
 import HighScore from "../highscore";
+import Lost from "./Lost";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 interface Props {
     signOut: () => void;
 }
 
-export type GamePage = "Menu" | "Game" | "GameOver" | "Scores";
+export type GamePage = "Menu" | "Game" | "GameOver" | "Scores" | "Lost";
 
 export default ({ signOut }: Props) => {
     const [gameState, setGameState] = useState<GamePage>("Menu");
     const [finishedGame, setFinishedGame] = useState<HighScore | null>(null);
+    const [gameWord, setGameWord] = useState<string | null>(null);
 
     const getContentForState = () => {
         switch (gameState) {
@@ -30,21 +32,22 @@ export default ({ signOut }: Props) => {
             case "Game":
                 return (
                     <PlayArea
-                        gameFinished={score => {
+                        gameWon={score => {
                             setFinishedGame(score);
                             setGameState("GameOver");
+                        }}
+                        gameLost={word => {
+                            setGameWord(word);
+                            setGameState("Lost");
                         }}
                     />
                 );
             case "GameOver":
-                return (
-                    <GameOver
-                        goToMenu={() => setGameState("Menu")}
-                        game={finishedGame!}
-                    />
-                );
+                return <GameOver game={finishedGame!} />;
             case "Scores":
                 return <Scores />;
+            case "Lost":
+                return <Lost word={gameWord!} />;
         }
     };
     return (

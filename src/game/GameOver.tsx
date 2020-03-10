@@ -4,14 +4,13 @@ import HighScore from "../highscore";
 import HighScoreList from "../components/HighScoreList";
 
 interface Props {
-    goToMenu: () => void;
     game: HighScore;
 }
 
-export default ({ goToMenu, game }: Props) => (
+export default ({ game }: Props) => (
     <>
         <Typography variant="h1">TILLYKKE</Typography>
-        <Typography>Ordet var {"Sovs"}</Typography>
+        <Typography>Ordet var {game.word}</Typography>
         <HighScoreList selectedGame={game} />
     </>
 );

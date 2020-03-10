@@ -13,9 +13,14 @@ export default ({ selectedGame }: Props) => {
     useEffect(() => {
         const list = loadHighScores();
         setList(list);
+        setTimeout(() => scrollCurrentGameIntoView(list), 400);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const scrollCurrentGameIntoView = (listToUse: HighScore[]) => {
         if (selectedGame) {
-            const currentGame = list.findIndex(
-                h => h.uniqueness === selectedGame.uniqueness
+            const currentGame = listToUse.findIndex(
+                h => h.uniqueness === selectedGame!.uniqueness
             );
             if (currentGame !== -1) {
                 const target = document.querySelector(`#A${currentGame}`);
@@ -24,8 +29,7 @@ export default ({ selectedGame }: Props) => {
                 }
             }
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    };
 
     const formatTime = (input: Date) => {
         let timeInSeconds = Math.floor(input.getTime() / 1000);
