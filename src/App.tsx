@@ -20,7 +20,7 @@ export const colors = {
 };
 
 export default () => {
-    const [authorized, setAuth] = useState(true);
+    const [authorized, setAuth] = useState(false);
 
     return (
         <div className="App" style={{ background: colors.green }}>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { TextField, Button, Paper, Typography } from "@material-ui/core";
 import Axios from "axios";
 import Spacer from "../components/Spacer";
+import Watermelon from "../components/Watermelon";
 
 interface Props {
     didSignIn: () => void;
@@ -27,7 +28,6 @@ export default (props: Props) => {
             style={{
                 display: "flex",
                 flexDirection: "column",
-                height: 300,
                 width: 300,
                 background: "white",
                 padding: 20,
@@ -36,6 +36,7 @@ export default (props: Props) => {
             <Typography variant="h4" color="primary" align="center">
                 Log ind
             </Typography>
+            <Watermelon />
             <Spacer />
             <TextField
                 value={username}
