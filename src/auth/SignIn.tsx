@@ -74,6 +74,7 @@ export default (props: Props) => {
                 disabled={signingIn}
                 label="Kodeord"
                 type="password"
+                onKeyDown={e => e.key === "Enter" && signIn()}
                 onChange={e => setPassword(e.target.value)}
             />
             <Spacer />
