@@ -5,6 +5,7 @@ import { CircularProgress } from "@material-ui/core";
 import { globalUsername } from "../auth/SignIn";
 import Axios from "axios";
 import { API_URL } from "../API_URL";
+import Galge from "../components/Galge";
 
 interface Props {
     gameWon: (result: HighScore) => void;
@@ -152,7 +153,9 @@ export default class PlayArea extends Component<Props> {
             <div
                 style={{ flex: "0 300px", background: "white" }}
                 className="hangMan"
-            ></div>
+            >
+                <Galge playSegment={this.state.wrongGuessed.size} />
+            </div>
             {this.state.secretWord ? (
                 this.renderGame()
             ) : (
