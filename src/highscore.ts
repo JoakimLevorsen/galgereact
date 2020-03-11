@@ -25,10 +25,11 @@ export default class HighScore {
     }
 
     public calcScore = () =>
-        twoMinInMs -
-        this.timeInMs +
-        500 * this.word.length -
-        500 * this.wrongLettersGuessed;
+        Math.floor(
+            (twoMinInMs - this.timeInMs) / 10 +
+                500 * this.word.length -
+                500 * this.wrongLettersGuessed
+        );
 }
 
 const key = "highScore";

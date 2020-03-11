@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import HighScore, { saveHighScore } from "../highscore";
 import Spacer from "../components/Spacer";
 import { CircularProgress } from "@material-ui/core";
+import { globalUsername } from "../auth/SignIn";
+import Axios from "axios";
+import { API_URL } from "../API_URL";
 
 interface Props {
     gameWon: (result: HighScore) => void;
@@ -31,8 +34,29 @@ export default class PlayArea extends Component<Props> {
         this.gameStart = new Date();
         this.makeTimer();
         this.addKeyboardListener();
-        setTimeout(() => this.setState({ secretWord: "SOVS" }), 1000);
+        this.getWord();
     }
+
+    getWord = () =>
+        Axios.get(API_URL + "/getWord")
+            .then(r => this.setState({ secretWord: r.data.toUpperCase() }))
+            .catch(e => {
+                console.error(e);
+                alert("En intern fejl fandt sted");
+            });
+
+    checkWord = (letter: string) =>
+        Axios.get(API_URL + "/postguess", {
+            params: {
+                ordet: this.state.secretWord,
+                bogstav: letter,
+            },
+        })
+            .then(r => console.log("Got response", r))
+            .catch(e => {
+                console.error(e);
+            })
+            .finally(() => console.log("celebrate"));
 
     makeTimer = () =>
         setTimeout(() => {
@@ -59,13 +83,14 @@ export default class PlayArea extends Component<Props> {
                 } = this.state;
                 if (!secretWord || !this.gameStart) return;
                 if (!(wrongGuessed.has(key) && correctlyGuessed.has(key))) {
+                    this.checkWord(key);
                     if (secretWord.includes(key)) {
                         correctlyGuessed.add(key);
                         this.setState({ correctlyGuessed });
                         // Now we check if we have won
                         if (!this.secretWord.includes("_")) {
                             const newScore = new HighScore(
-                                "TODO",
+                                globalUsername ?? "",
                                 new Date(
                                     new Date().getTime() -
                                         this.gameStart.getTime()

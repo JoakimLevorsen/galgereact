@@ -8,8 +8,10 @@ interface Props {
 
 export default ({ word }: Props) => (
     <>
-        <Typography variant="h1">Desværre, du tabte</Typography>
-        <Typography>Ordet var {word}</Typography>
+        <Typography align="center" variant="h1">
+            Desværre, du tabte
+        </Typography>
+        <Typography align="center">Ordet var {word}</Typography>
         <HighScoreList />
     </>
 );
