@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography } from "@material-ui/core";
-import HighScore from "../highscore";
+import HighScore from "../Highscore";
 import HighScoreList from "../components/HighScoreList";
 
 interface Props {

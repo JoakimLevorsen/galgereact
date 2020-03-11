@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import HighScore, { loadHighScores } from "../highscore";
+import HighScore, { loadHighScores } from "../Highscore";
 import { Card, Typography } from "@material-ui/core";
 import Spacer from "./Spacer";
 

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import HighScore, { saveHighScore } from "../highscore";
+import HighScore, { saveHighScore } from "../Highscore";
 import Spacer from "../components/Spacer";
 import { CircularProgress } from "@material-ui/core";
 import { globalUsername } from "../auth/SignIn";

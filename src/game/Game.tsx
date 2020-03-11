@@ -10,7 +10,7 @@ import Menu from "./Menu";
 import Scores from "./Scores";
 import GameOver from "./GameOver";
 import PlayArea from "./PlayArea";
-import HighScore from "../highscore";
+import HighScore from "../Highscore";
 import Lost from "./Lost";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
